@@ -1,12 +1,14 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from app.routers import auth
 
 from app.database import Base, engine
-from app.models import user 
+from app.models import user, shipment
+from app.routers import auth, shipment
 
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title="Shipment Tracker API")
+
 
 # Allow all origins 
 origins = ["*"]
@@ -20,11 +22,11 @@ app.add_middleware(
 )
 
 
-app = FastAPI(title="Shipment Tracker API")
-
 Base.metadata.create_all(bind=engine)
 app.include_router(auth.router)
+app.include_router(shipment.router)
 
 @app.get("/")
 def root():
     return {"message": "Shipment Tracker API is running 🚚"}
+
