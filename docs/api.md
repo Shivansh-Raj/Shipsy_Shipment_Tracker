@@ -20,7 +20,7 @@ Visit `/docs` in your browser to explore Swagger UI for all endpoints.
 |--------|---------|------------|
 | POST | /auth/register | Register a new user |
 | POST | /auth/login | Login and receive JWT token |
-| GET  | /auth/authenticate | Checks whether a user is authenticated or not |
+| GET  | /auth/authenticate | Checks whether a user is authenticated or not|
 
 ---
 
