@@ -1,4 +1,3 @@
-
 import enum
 from sqlalchemy import Column, Integer, String, Boolean, Float, Enum, DateTime
 from sqlalchemy.sql import func
