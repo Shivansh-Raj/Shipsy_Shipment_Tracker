@@ -17,6 +17,7 @@ def calc_shipping_fee(weight: float, is_express: bool) -> float:
     multiplier = EXPRESS_MULTIPLIER if is_express else REGULAR_MULTIPLIER
     return round(weight * multiplier, 2)
 
+# Creates new shipment
 @router.post("/", response_model=ShipmentOut, status_code=status.HTTP_201_CREATED)
 def create_shipment(
     payload: ShipmentCreate,
@@ -35,6 +36,7 @@ def create_shipment(
     db.refresh(db_obj)
     return db_obj
 
+# List shipments allowing filteration various fields like name, status etc.
 @router.get("/", response_model=List[ShipmentOut])
 def list_shipments(
     page: int = Query(1, ge=1),
@@ -69,23 +71,25 @@ def list_shipments(
     items = q.offset(skip).limit(limit).all()
     return items
 
+# Get a single shipment by ID
 @router.get("/{shipment_id}", response_model=ShipmentOut)
 def get_shipment(
     shipment_id: int,
     db: Session = Depends(get_db),
-    current_user = Depends(get_current_user)  # JWT required
+    current_user = Depends(get_current_user)  
 ):
     obj = db.query(Shipment).filter(Shipment.id == shipment_id).first()
     if not obj:
         raise HTTPException(status_code=404, detail="Shipment not found")
     return obj
 
+# Updates a shipment by ID
 @router.put("/{shipment_id}", response_model=ShipmentOut)
 def update_shipment(
     shipment_id: int,
     payload: ShipmentUpdate,
     db: Session = Depends(get_db),
-    current_user = Depends(get_current_user)  # JWT required
+    current_user = Depends(get_current_user)  
 ):
     obj = db.query(Shipment).filter(Shipment.id == shipment_id).first()
     if not obj:
@@ -113,6 +117,7 @@ def update_shipment(
     db.refresh(obj)
     return obj
 
+# Delete a shipment by ID
 @router.delete("/{shipment_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_shipment(
     shipment_id: int,
