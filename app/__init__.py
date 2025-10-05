@@ -1,0 +1,1 @@
+# It will tell the Python that app is a module
