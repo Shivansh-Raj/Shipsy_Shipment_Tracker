@@ -82,3 +82,19 @@ def login_user(user: UserCreate, db: Session = Depends(get_db)):
     
     token = generate_access_token(db_user.username)
     return {"access_token": token, "token_type": "bearer"}
+
+
+@router.get("/authenticate")
+def authenticate_user(
+    credentials: HTTPAuthorizationCredentials = Depends(auth_scheme),  
+    db: Session = Depends(get_db)
+):
+    """
+    Verify the user's access token.
+    """
+    token = credentials.credentials
+    try:
+        user = fetch_user_from_token(token, db) 
+        return {"authenticated": True, "username": user.username}
+    except:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid or expired token")
