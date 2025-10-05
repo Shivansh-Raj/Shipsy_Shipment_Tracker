@@ -52,7 +52,7 @@ def fetch_user_from_token(token: str, db: Session) -> User:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
 
 
-def get_authenticated_user(credentials: HTTPAuthorizationCredentials = Depends(auth_scheme),
+def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(auth_scheme),
                            db: Session = Depends(get_db)) -> User:
     jwt_token = credentials.credentials
     return fetch_user_from_token(jwt_token, db)
