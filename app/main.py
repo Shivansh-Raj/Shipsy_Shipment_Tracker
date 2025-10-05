@@ -7,12 +7,12 @@ from app.routers import auth, shipment
 
 from fastapi.middleware.cors import CORSMiddleware
 
+# Initializes FASTAPI
 app = FastAPI(title="Shipment Tracker API")
 
 
 # Allow all origins 
 origins = ["*"]
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,     
@@ -21,12 +21,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
+# Creates a database if missing
 Base.metadata.create_all(bind=engine)
+
+# Routers
 app.include_router(auth.router)
 app.include_router(shipment.router)
 
+# Default Emdpoint
 @app.get("/")
 def root():
-    return {"message": "Shipment Tracker API is running 🚚"}
+    return {"message": "Shipment Tracker API is running 🚚===="}
 
