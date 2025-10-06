@@ -21,11 +21,17 @@ Visit `/docs` in your browser to explore Swagger UI for all endpoints.
 
 ## How to Use
 
-### 1. Register & Login
+### 1. Register 
 - **Register** → `POST /auth/register` with:
   ```json
   { "username": "testuser", "password": "1234" }
 
+### 2. How to get access_token
+- **login** → `POST /auth/login` with:
+  ```json
+  { "username": "testuser", "password": "1234" }
+- **copy your access token**
+  
 ## Authorization
 
 ### Swagger UI
